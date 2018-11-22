@@ -1,0 +1,35 @@
+<h3>This it's working</h3>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<ul>
+	<li><a href="{% url 'payment_new' %}">Payment</a></li>
+</ul>
+
+<hr>
+
+<b>Data Atual: </b> {{data_atual}}
+
+<button>Proximo mes</button>
+
+{{line_chart.as_html}}
+
+<table border='1' style="margin-top: 25px">
+	<thead>
+		<tr>
+			<th>Description</th>
+			<th>Value</th>
+			<th>InitialDate</th>
+			<th>FinalDate</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for payment in payments %}
+			<tr>
+				<td>{{payment.description}}</td>
+				<td>{{payment.value}}</td>
+				<td>{{payment.initial_date}}</td>
+				<td>{{payment.final_date}}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
