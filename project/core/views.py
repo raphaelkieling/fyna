@@ -13,20 +13,21 @@ def home(request):
 	initial_date = '{}-{}-{}'.format(today.year, today.month, '01')
 	final_data   = '{}-{}-{}'.format(today.year, today.month, '30')
 
-	payment_filter = Payment.objects.filter(initial_date__gte=initial_date, final_date__lte=final_data, is_renda=False)
+	payment_filter = Payment.objects.filter(initial_date__gte=initial_date, final_date__lte=final_data)
 
-	total_value = payment_filter.aggregate(
-		Sum('value')
-	)
-	queryset = payment_filter.order_by('initial_date')
+	total_gastos_value = payment_filter.filter(is_renda=False).aggregate(Sum('value'))
+	total_renda_value  = payment_filter.filter(is_renda=True).aggregate(Sum('value')) 
 
-	data_source =  ModelDataSource(queryset, fields=['initial_date','value'])
-	chart = highcharts.LineChart(data_source)
+	payments = payment_filter.filter(is_renda=False).order_by('initial_date')
+
+	data_source =  ModelDataSource(payments, fields=['initial_date','value'])
+	chart = highcharts.LineChart(data_source, width='100%', height='100%')
 
 	return render(request, 'core/home.html', {
 		'data_atual': today.month,
-		'payments': queryset,
-		'total_value': total_value['value__sum'],
+		'payments': payments,
+		'total_gastos_value': total_gastos_value['value__sum'],
+		'total_renda_value': total_renda_value['value__sum'],
 		'line_chart': chart
 	})
 
@@ -40,4 +41,5 @@ def payment_new(request):
 			return redirect('home')
 	else:
 		form = PaymentForm()
+		
 	return render(request, 'core/payment_new.html', {'form': form})

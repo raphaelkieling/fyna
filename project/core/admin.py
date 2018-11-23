@@ -5,6 +5,12 @@ from .models import Tag, Payment
 admin.site.register(Tag)
 
 class PaymentAdmin(admin.ModelAdmin):
-	list_display = ('description', 'value','tag', 'initial_date','final_date')
+	list_display = (
+		'description',
+		'value',
+		'tag',
+		'initial_date',
+		'final_date'
+	)
 
 admin.site.register(Payment, PaymentAdmin)
