@@ -8,6 +8,7 @@
 		    flex-direction: column;
 		    justify-content: center;
 		    align-items: center;
+			margin: 0 10px;
 		}
 
 		.total_value_month--value{
@@ -15,31 +16,41 @@
 			text-align: center;
 			font-size: 32px;
 			font-weight: bold;
+		}
+
+		.total_value_month--value--gasto{
+			border-bottom: #e74c3c solid 5px;
+		}
+
+		.total_value_month--value--renda{
 			border-bottom: #2ecc71 solid 5px;
 		}
 
-		.total_value_month--description{
-			display: block;
-			text-align: center;
+		.total_value_container{
+			display: flex;
+			justify-content: center;
+			margin-bottom: 25px;
 		}
+
 	</style>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 
-	<div class="total_value_month">
-		<span class="total_value_month--description">totais de gastos este mês</span>
-		<span class="total_value_month--value">{{total_value}}</span>
-		
+	<div class="total_value_container">
+		<div class="total_value_month">
+			<span class="total_value_month--value total_value_month--value--gasto">{{total_gastos_value}}</span>
+		</div>
+	
+		<div class="total_value_month">
+			<span class="total_value_month--value total_value_month--value--renda">{{total_renda_value}}</span>
+		</div>
 	</div>
-
-	<b>Data Atual: </b> {{data_atual}}
-
-	<button>Proximo mes</button>
 
 	{{line_chart.as_html}}
 
 	<table class="table table-hover" style="margin-top: 25px">
 		<thead>
 			<tr>
+				<th>Tag</th>
 				<th>Description</th>
 				<th>Value</th>
 				<th>InitialDate</th>
@@ -49,6 +60,7 @@
 		<tbody>
 			{% for payment in payments %}
 				<tr>
+					<td>{{payment.tag.description}}</td>
 					<td>{{payment.description}}</td>
 					<td>{{payment.value}}</td>
 					<td>{{payment.initial_date}}</td>
