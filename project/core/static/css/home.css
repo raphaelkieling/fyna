@@ -1,0 +1,19 @@
+.total_value_month{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.total_value_month--value{
+	display: block;
+	text-align: center;
+	font-size: 32px;
+	font-weight: bold;
+	border-bottom: #2ecc71 solid 5px;
+}
+
+.total_value_month--description{
+	display: block;
+	text-align: center;
+}

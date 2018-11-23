@@ -1,35 +1,60 @@
-<h3>This it's working</h3>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<ul>
-	<li><a href="{% url 'payment_new' %}">Payment</a></li>
-</ul>
+{% extends 'core/base.html' %}
+{% load static %}
 
-<hr>
+{% block content %}
+	<style>
+		.total_value_month{
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: center;
+		    align-items: center;
+		}
 
-<b>Data Atual: </b> {{data_atual}}
+		.total_value_month--value{
+			display: block;
+			text-align: center;
+			font-size: 32px;
+			font-weight: bold;
+			border-bottom: #2ecc71 solid 5px;
+		}
 
-<button>Proximo mes</button>
+		.total_value_month--description{
+			display: block;
+			text-align: center;
+		}
+	</style>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 
-{{line_chart.as_html}}
+	<div class="total_value_month">
+		<span class="total_value_month--description">totais de gastos este mês</span>
+		<span class="total_value_month--value">{{total_value}}</span>
+		
+	</div>
 
-<table border='1' style="margin-top: 25px">
-	<thead>
-		<tr>
-			<th>Description</th>
-			<th>Value</th>
-			<th>InitialDate</th>
-			<th>FinalDate</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for payment in payments %}
+	<b>Data Atual: </b> {{data_atual}}
+
+	<button>Proximo mes</button>
+
+	{{line_chart.as_html}}
+
+	<table class="table table-hover" style="margin-top: 25px">
+		<thead>
 			<tr>
-				<td>{{payment.description}}</td>
-				<td>{{payment.value}}</td>
-				<td>{{payment.initial_date}}</td>
-				<td>{{payment.final_date}}</td>
+				<th>Description</th>
+				<th>Value</th>
+				<th>InitialDate</th>
+				<th>FinalDate</th>
 			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{% for payment in payments %}
+				<tr>
+					<td>{{payment.description}}</td>
+					<td>{{payment.value}}</td>
+					<td>{{payment.initial_date}}</td>
+					<td>{{payment.final_date}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
