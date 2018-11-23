@@ -15,6 +15,11 @@ class Payment(models.Model):
 	initial_date = models.DateField()
 	final_date = models.DateField()
 	is_renda = models.BooleanField()
+	is_continuous = model.BooleanField() 
 
 	def __str__(self):
 		return self.description
+
+class PaymentCustom(models.Model):
+	payment = models.ForeignKey(Payment, on_delete = models.CASCADE)
+	date    = model.DateField()
